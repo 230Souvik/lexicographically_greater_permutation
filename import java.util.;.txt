@@ -1,0 +1,48 @@
+import java.util.*;
+public class Solution {
+    public static List< Integer > nextGreaterPermutation(List< Integer > a) {
+        // Write your code here.
+         int n = a.size();
+        
+        // Find the first element from the right which is smaller than its next element
+        int i;
+        for (i = n - 2; i >= 0; i--) {
+            if (a.get(i) < a.get(i + 1)) {
+                break;
+            }
+        }
+        
+        // If no such element is found, reverse the array to get the lowest possible order
+        if (i == -1) {
+            Collections.reverse(a);
+            return a;
+        }
+        
+        // Find the smallest element to the right of 'i' that is greater than 'a.get(i)'
+        int j;
+        for (j = n - 1; j > i; j--) {
+            if (a.get(j) > a.get(i)) {
+                break;
+            }
+        }
+        
+        // Swap 'a.get(i)' and 'a.get(j)'
+        Collections.swap(a, i, j);
+        
+        // Reverse the elements to the right of 'i'
+        Collections.reverse(a.subList(i + 1, n));
+        
+        return a;
+    }
+     public static void main(String[] args) {
+        ArrayList<Integer> a = new ArrayList<>();
+        a.add(1);
+        a.add(3);
+        a.add(2);
+        
+        ArrayList<Integer> result = findNextPermutation(a);
+        
+        System.out.println(result);
+    }
+    
+}
